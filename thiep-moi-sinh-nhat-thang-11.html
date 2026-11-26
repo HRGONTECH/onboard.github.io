@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Thiệp Mời Sinh Nhật Tháng 11 — Gon tech</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --brand-blue: #0057d9;
+      --brand-deep: #003594;
+      --brand-sky: #0ea5e9;
+      --brand-cyan: #00c9be;
+      --brand-aqua: #00e5d4;
+      --text-main: #092042;
+      --text-muted: #456287;
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --border-soft: rgba(0, 180, 210, 0.28);
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      background: radial-gradient(circle at 8% 12%, rgba(0, 87, 217, 0.22) 0%, transparent 46%),
+                  radial-gradient(circle at 92% 10%, rgba(0, 229, 212, 0.36) 0%, transparent 48%),
+                  radial-gradient(circle at 50% 96%, rgba(14, 165, 233, 0.22) 0%, transparent 50%),
+                  linear-gradient(138deg, #e2efff 0%, #eef9ff 46%, #d9fcf8 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #bgCanvas, #confettiCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    #bgCanvas { z-index: 0; }
+    #confettiCanvas { z-index: 60; }
+
+    /* Cover Screen */
+    .cover-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: radial-gradient(circle at 12% 16%, rgba(0, 87, 217, 0.28) 0%, transparent 48%),
+                  radial-gradient(circle at 88% 14%, rgba(0, 229, 212, 0.42) 0%, transparent 48%),
+                  radial-gradient(circle at 50% 94%, rgba(14, 165, 233, 0.24) 0%, transparent 50%),
+                  linear-gradient(138deg, #dfeeff 0%, #edf9ff 48%, #d4fbf6 100%);
+      transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.75s;
+    }
+
+    .cover-screen.hidden {
+      opacity: 0;
+      transform: scale(1.05);
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .cover-card {
+      width: 100%;
+      max-width: 440px;
+      padding: 36px 28px 32px;
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.95);
+      border: 1.5px solid rgba(0, 198, 190, 0.32);
+      box-shadow: 0 28px 70px rgba(0, 68, 180, 0.16),
+                  0 8px 26px rgba(0, 204, 194, 0.14);
+      text-align: center;
+      backdrop-filter: blur(20px);
+    }
+
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e0eeff, #d7fbf7);
+      border: 1px solid rgba(0, 168, 214, 0.35);
+      color: var(--brand-deep);
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .cover-logo-frame {
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto 22px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(0, 198, 190, 0.36);
+      box-shadow: 0 14px 32px rgba(0, 62, 168, 0.22);
+    }
+
+    .cover-logo-frame img, .logo-banner img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .cover-title {
+      font-size: clamp(24px, 5vw, 31px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      background: linear-gradient(108deg, #003594 0%, #006be6 48%, #00c9be 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .cover-sub {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .cover-sub strong { color: var(--brand-deep); }
+
+    .btn-open {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(110deg, #003fa8 0%, #0074e8 50%, #00d4c6 100%);
+      background-size: 200% auto;
+      color: #ffffff;
+      font-size: 15.5px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(0, 116, 232, 0.34);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background-position 0.4s ease;
+      animation: pulseGlow 2.4s infinite;
+    }
+
+    .btn-open:hover {
+      transform: translateY(-2px) scale(1.02);
+      background-position: right center;
+      box-shadow: 0 16px 34px rgba(0, 168, 200, 0.44);
+    }
+
+    .cover-hint {
+      margin-top: 13px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 12px 28px rgba(0, 116, 232, 0.32), 0 0 0 0 rgba(0, 212, 198, 0.48); }
+      70% { box-shadow: 0 12px 28px rgba(0, 116, 232, 0.32), 0 0 0 13px rgba(0, 212, 198, 0); }
+      100% { box-shadow: 0 12px 28px rgba(0, 116, 232, 0.32), 0 0 0 0 rgba(0, 212, 198, 0); }
+    }
+
+    /* Compact Main Wrapper */
+    .page-wrap {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 20px 16px 96px;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.8s ease 0.12s, transform 0.8s ease 0.12s;
+    }
+
+    .page-wrap.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .top-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(0, 168, 198, 0.24);
+      color: var(--brand-deep);
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.08);
+      backdrop-filter: blur(10px);
+    }
+
+    .top-actions { display: flex; align-items: center; gap: 7px; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 102, 204, 0.18);
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--text-main);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.07);
+      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--brand-cyan);
+      background: #e6fbf9;
+      color: var(--brand-deep);
+    }
+
+    /* Quick Edit Panel */
+    .edit-panel {
+      display: none;
+      margin-bottom: 14px;
+      padding: 16px 18px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.96);
+      border: 1.5px solid rgba(0, 180, 216, 0.42);
+      box-shadow: 0 16px 38px rgba(0, 82, 204, 0.14);
+      backdrop-filter: blur(16px);
+    }
+
+    .edit-panel.open { display: block; animation: fadeSlide 0.28s ease; }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .edit-heading {
+      color: var(--brand-deep);
+      font-size: 13.5px;
+      font-weight: 800;
+    }
+
+    .edit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .field input, .field textarea {
+      width: 100%;
+      padding: 8px 11px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 168, 198, 0.3);
+      background: #f5fbff;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .field input:focus, .field textarea:focus {
+      border-color: var(--brand-blue);
+      background: #ffffff;
+    }
+
+    .edit-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0, 102, 204, 0.1);
+    }
+
+    .btn-primary {
+      padding: 9px 16px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(120deg, #003fa8, #0074e8, #00cfc2);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 12.5px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0, 116, 232, 0.28);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 22px rgba(0, 168, 200, 0.38);
+    }
+
+    /* Main Compact Invitation Card */
+    .invitation-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-soft);
+      box-shadow: 0 24px 64px rgba(0, 68, 180, 0.14),
+                  0 6px 22px rgba(0, 204, 194, 0.1);
+      overflow: hidden;
+      backdrop-filter: blur(22px);
+    }
+
+    .card-ribbon {
+      height: 6px;
+      background: linear-gradient(90deg, #003594, #0066e6, #0ea5e9, #00dfd3, #0066e6, #003594);
+      background-size: 200% 100%;
+      animation: shimmerRibbon 6s linear infinite;
+    }
+
+    @keyframes shimmerRibbon {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .hero {
+      padding: 30px 26px 24px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(0, 66, 178, 0.06) 0%, rgba(14, 165, 233, 0.09) 48%, rgba(0, 229, 212, 0.15) 100%);
+    }
+
+    .logo-banner {
+      display: inline-block;
+      max-width: 245px;
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 2px solid rgba(0, 198, 190, 0.34);
+      box-shadow: 0 12px 28px rgba(0, 62, 168, 0.2);
+      margin-bottom: 18px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 15px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e2efff, #d6fbf7);
+      border: 1px solid rgba(0, 168, 214, 0.34);
+      color: var(--brand-deep);
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 6vw, 40px);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin-bottom: 8px;
+      background: linear-gradient(112deg, #003594 0%, #006be6 48%, #00c4b8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-honorees {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #008b99;
+      margin-bottom: 12px;
+    }
+
+    .hero-message {
+      max-width: 490px;
+      margin: 0 auto 20px;
+      font-size: 14.5px;
+      color: #324f73;
+      line-height: 1.65;
+    }
+
+    /* Compact Interactive Cake */
+    .cake-zone {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+      padding: 8px 18px 8px 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #eef6ff, #e2fcf9);
+      border: 1.5px solid rgba(0, 180, 216, 0.36);
+      box-shadow: 0 6px 18px rgba(0, 116, 232, 0.12);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .cake-zone:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0, 168, 200, 0.22);
+      border-color: var(--brand-cyan);
+    }
+
+    .cake-svg { width: 46px; height: 42px; overflow: visible; flex-shrink: 0; }
+
+    .flame {
+      transform-origin: center bottom;
+      animation: flicker 0.55s infinite alternate ease-in-out;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .flame-2 { animation-delay: 0.15s; }
+    .flame-3 { animation-delay: 0.3s; }
+
+    .cake-zone.blown .flame {
+      opacity: 0;
+      transform: scale(0.1) translateY(-8px);
+      animation: none;
+    }
+
+    .smoke { opacity: 0; transition: opacity 0.3s ease; }
+    .cake-zone.blown .smoke {
+      opacity: 0.7;
+      animation: riseSmoke 1.4s ease-out forwards;
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-3deg); }
+      100% { transform: scale(1.08, 0.94) rotate(3deg); }
+    }
+
+    @keyframes riseSmoke {
+      0% { transform: translateY(0); opacity: 0.75; }
+      100% { transform: translateY(-16px); opacity: 0; }
+    }
+
+    .cake-caption { font-size: 12.5px; color: var(--brand-deep); font-weight: 700; text-align: left; }
+
+    /* Info Strip */
+    .info-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 20px 24px 22px;
+      background: linear-gradient(180deg, #f3faff, #f6fdfd);
+      border-top: 1px solid rgba(0, 168, 210, 0.15);
+      border-bottom: 1px solid rgba(0, 168, 210, 0.15);
+    }
+
+    @media (max-width: 580px) {
+      .info-strip { grid-template-columns: 1fr; padding: 18px; }
+      .hero { padding: 24px 18px 20px; }
+    }
+
+    .info-box {
+      padding: 14px 12px;
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      border: 1.5px solid rgba(0, 180, 216, 0.22);
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0, 87, 217, 0.06);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .info-box:hover { border-color: var(--brand-cyan); transform: translateY(-2px); }
+
+    .info-box.highlight {
+      background: linear-gradient(145deg, #d7ecff, #d2fbf7);
+      border-color: rgba(0, 148, 214, 0.45);
+    }
+
+    .info-box.warm {
+      background: linear-gradient(145deg, #edf5ff, #e4f4ff);
+      border-color: rgba(56, 152, 255, 0.36);
+    }
+
+    .info-box.mint {
+      background: linear-gradient(145deg, #e0fcf9, #e6f6ff);
+      border-color: rgba(0, 201, 190, 0.42);
+    }
+
+    .info-icon { font-size: 19px; margin-bottom: 4px; }
+    .info-label {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+    .info-value { font-size: 15px; font-weight: 800; color: var(--text-main); }
+
+    /* Compact Wishes Section */
+    .wish-section {
+      padding: 20px 24px 22px;
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0, 168, 198, 0.12);
+    }
+
+    @media (max-width: 580px) { .wish-section { padding: 18px; } }
+
+    .wish-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .wish-title {
+      font-size: 15.5px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .wish-badge {
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 11px;
+      border-radius: 999px;
+      background: #e6fbf9;
+      border: 1px solid rgba(0, 196, 184, 0.35);
+      color: #008289;
+    }
+
+    .wish-form {
+      display: grid;
+      grid-template-columns: 1fr 1.65fr auto;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 580px) { .wish-form { grid-template-columns: 1fr; } }
+
+    .wish-form input {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(0, 168, 198, 0.25);
+      background: #f6fbff;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .wish-form input:focus {
+      border-color: var(--brand-blue);
+      background: #ffffff;
+    }
+
+    .quick-wishes { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+
+    .chip {
+      padding: 4px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 168, 198, 0.24);
+      background: #f4fbff;
+      color: #2f547a;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .chip:hover {
+      border-color: var(--brand-cyan);
+      color: var(--brand-deep);
+      background: #dffbf8;
+    }
+
+    .wish-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 9px;
+      max-height: 190px;
+      overflow-y: auto;
+    }
+
+    .wish-card {
+      position: relative;
+      padding: 11px 28px 11px 13px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #f5fbff, #f0fdfb);
+      border: 1px solid rgba(0, 180, 216, 0.22);
+      animation: fadeSlide 0.3s ease;
+    }
+
+    .wish-del {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 20px;
+      height: 20px;
+      border: none;
+      border-radius: 50%;
+      background: transparent;
+      color: #8aa4c4;
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .wish-del:hover {
+      background: rgba(239, 68, 68, 0.12);
+      color: #dc2626;
+    }
+
+    .wish-author { font-size: 12px; font-weight: 800; color: var(--brand-blue); margin-bottom: 2px; }
+    .wish-body { font-size: 12.5px; color: #365070; line-height: 1.45; }
+
+    .card-footer {
+      padding: 16px 24px;
+      text-align: center;
+      background: linear-gradient(90deg, #e8f4ff, #e6fbf9);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .card-footer strong { color: var(--brand-deep); }
+
+    /* Floating Music Player */
+    .music-bar {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      z-index: 45;
+      width: calc(100% - 28px);
+      max-width: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1.5px solid rgba(0, 196, 184, 0.38);
+      box-shadow: 0 14px 36px rgba(0, 71, 189, 0.16);
+      backdrop-filter: blur(18px);
+    }
+
+    .music-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+
+    .btn-play {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #003fa8, #0074e8, #00d4c6);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(0, 116, 232, 0.34);
+      transition: transform 0.2s;
+    }
+    .btn-play:hover { transform: scale(1.07); }
+
+    .eq-bars { display: flex; align-items: flex-end; gap: 3px; height: 16px; flex-shrink: 0; }
+    .eq-bars span { width: 3px; height: 5px; border-radius: 2px; background: #00c4b8; }
+    .eq-bars.playing span:nth-child(1) { animation: eq 0.65s infinite alternate; background: #003fa8; }
+    .eq-bars.playing span:nth-child(2) { animation: eq 0.52s infinite alternate 0.15s; background: #0074e8; }
+    .eq-bars.playing span:nth-child(3) { animation: eq 0.72s infinite alternate 0.08s; background: #0ea5e9; }
+    .eq-bars.playing span:nth-child(4) { animation: eq 0.58s infinite alternate 0.22s; background: #00d4c6; }
+
+    @keyframes eq { 0% { height: 4px; } 100% { height: 16px; } }
+
+    .music-meta { min-width: 0; }
+    .music-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .music-status { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+
+    .music-controls { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+
+    .mode-btn {
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 168, 210, 0.26);
+      background: #f2faff;
+      color: var(--text-main);
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mode-btn:hover, .mode-btn.active {
+      border-color: var(--brand-blue);
+      background: linear-gradient(135deg, #e0efff, #d8fbf7);
+      color: var(--brand-deep);
+    }
+
+    .vol-slider { width: 62px; accent-color: var(--brand-blue); cursor: pointer; }
+
+    @media (max-width: 520px) {
+      .vol-slider { display: none; }
+      .music-bar { padding: 8px 12px; }
+    }
+
+    .toast {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-80px);
+      z-index: 80;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1.5px solid var(--brand-cyan);
+      color: var(--brand-deep);
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 12px 30px rgba(0, 102, 204, 0.16);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+  <canvas id="confettiCanvas"></canvas>
+  <div id="toast" class="toast"></div>
+
+  <!-- Cover Screen -->
+  <div id="coverScreen" class="cover-screen">
+    <div class="cover-card">
+      <div class="cover-badge">✦ Thiệp Mời Sinh Nhật · Tháng 11 ✦</div>
+      <div class="cover-logo-frame">
+        <img id="coverLogo" alt="Gon tech logo" src="data:image/jpeg;base64,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" />
+      </div>
+      <h1 class="cover-title">Tiệc Sinh Nhật Tháng 11</h1>
+      <p class="cover-sub">Thân mời đại gia đình <strong>Gon tech</strong> cùng chung vui lúc <strong>15:00 – 16:30</strong>!</p>
+      <button id="openInviteBtn" class="btn-open" type="button">
+        <span>🎉</span>
+        <span>Mở Thiệp &amp; Bật Nhạc</span>
+      </button>
+      <div class="cover-hint">🎵 Có nhạc chúc mừng sinh nhật</div>
+    </div>
+  </div>
+
+  <!-- Compact Invitation Content -->
+  <main id="pageWrap" class="page-wrap">
+    <div class="top-bar">
+      <div class="top-pill">🎂 Gon tech · Tháng 11</div>
+      <div class="top-actions">
+        <button id="confettiBtn" class="btn-ghost" type="button">🎊 Pháo giấy</button>
+        <button id="toggleEditBtn" class="btn-ghost" type="button">✏️ Tuỳ chỉnh</button>
+      </div>
+    </div>
+
+    <!-- Collapsible Quick Edit Drawer -->
+    <section id="editPanel" class="edit-panel" aria-label="Tuỳ chỉnh nội dung thiệp">
+      <strong class="edit-heading">✏️ Tuỳ chỉnh nhanh thông tin thiệp</strong>
+      <div class="edit-grid">
+        <div class="field">
+          <label for="inpDate">Ngày tổ chức</label>
+          <input id="inpDate" type="text" value="Thứ Năm, 26/11" />
+        </div>
+        <div class="field">
+          <label for="inpLocation">Địa điểm</label>
+          <input id="inpLocation" type="text" value="Văn phòng Gon tech" />
+        </div>
+        <div class="field">
+          <label for="inpHonorees">Dành tặng</label>
+          <input id="inpHonorees" type="text" value="Chúc mừng các thành viên sinh nhật Tháng 11" />
+        </div>
+        <div class="field">
+          <label for="inpCustomAudio">Nhạc MP3 riêng (tuỳ chọn)</label>
+          <input id="inpCustomAudio" type="file" accept="audio/*" />
+        </div>
+      </div>
+      <div class="field" style="margin-top:10px;">
+        <label for="inpMessage">Lời mời</label>
+        <textarea id="inpMessage" rows="2">Thân mời cả nhà Gon tech cùng tụ họp thổi nến, cắt bánh kem và gửi những lời chúc thật ý nghĩa đến các thành viên sinh nhật tháng 11 nhé!</textarea>
+      </div>
+      <div class="edit-footer">
+        <button id="downloadHtmlBtn" class="btn-primary" type="button">💾 Tải thiệp đã chỉnh sửa</button>
+        <button id="closeEditBtn" class="btn-ghost" type="button">Đóng</button>
+      </div>
+    </section>
+
+    <article class="invitation-card">
+      <div class="card-ribbon"></div>
+
+      <header class="hero">
+        <div class="logo-banner">
+          <img id="heroLogo" alt="Gon tech logo" src="data:image/jpeg;base64,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" />
+        </div>
+        <div class="kicker">✨ Happy Birthday ✨</div>
+        <h1>Tiệc Sinh Nhật Tháng 11</h1>
+        <div id="viewHonorees" class="hero-honorees">Chúc mừng các thành viên sinh nhật Tháng 11</div>
+        <p id="viewMessage" class="hero-message">
+          Thân mời cả nhà Gon tech cùng tụ họp thổi nến, cắt bánh kem và gửi những lời chúc thật ý nghĩa đến các thành viên sinh nhật tháng 11 nhé!
+        </p>
+
+        <div id="cakeZone" class="cake-zone" role="button" tabindex="0" title="Nhấn để thổi nến ước nguyện">
+          <svg class="cake-svg" viewBox="0 0 120 105" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g class="smoke" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round">
+              <path d="M40 18 Q36 10 42 5" />
+              <path d="M60 14 Q64 7 58 2" />
+              <path d="M80 18 Q84 10 78 5" />
+            </g>
+            <g class="flame flame-1">
+              <path d="M40 11 C44 17 44 23 40 25 C36 23 36 17 40 11Z" fill="#FF7B00"/>
+              <path d="M40 15 C42 19 42 22 40 24 C38 22 38 19 40 15Z" fill="#FFE66D"/>
+            </g>
+            <g class="flame flame-2">
+              <path d="M60 7 C64.5 13.5 64.5 20.5 60 22.5 C55.5 20.5 55.5 13.5 60 7Z" fill="#FF7B00"/>
+              <path d="M60 11.5 C62.2 15.5 62.2 19.5 60 21.2 C57.8 19.5 57.8 15.5 60 11.5Z" fill="#FFE66D"/>
+            </g>
+            <g class="flame flame-3">
+              <path d="M80 11 C84 17 84 23 80 25 C76 23 76 17 80 11Z" fill="#FF7B00"/>
+              <path d="M80 15 C82 19 82 22 80 24 C78 22 78 19 80 15Z" fill="#FFE66D"/>
+            </g>
+            <rect x="37" y="25" width="6" height="19" rx="2.5" fill="#00D4C6"/>
+            <rect x="57" y="22" width="6" height="22" rx="2.5" fill="#0066E6"/>
+            <rect x="77" y="25" width="6" height="19" rx="2.5" fill="#38BDF8"/>
+            <rect x="24" y="44" width="72" height="24" rx="8" fill="#4DC9F6" stroke="#0088CC" stroke-width="2"/>
+            <path d="M24 51 Q32 58 40 51 Q48 59 56 51 Q64 59 72 51 Q80 59 88 51 Q92 55 96 51 L96 47 C96 44.8 94.2 44 92 44 L28 44 C25.8 44 24 44.8 24 47 Z" fill="#FFFFFF"/>
+            <rect x="16" y="66" width="88" height="26" rx="9" fill="#00CFC2" stroke="#009E99" stroke-width="2"/>
+            <circle cx="34" cy="79" r="3.4" fill="#FFFFFF"/>
+            <circle cx="60" cy="79" r="3.4" fill="#E0F7FF"/>
+            <circle cx="86" cy="79" r="3.4" fill="#FFFFFF"/>
+          </svg>
+          <span id="cakeCaption" class="cake-caption">Nhấn để thổi nến ước nguyện ✨</span>
+        </div>
+      </header>
+
+      <!-- Event Key Info Strip -->
+      <section class="info-strip" aria-label="Thông tin sự kiện">
+        <div class="info-box highlight">
+          <div class="info-icon">🕒</div>
+          <div class="info-label">Thời gian</div>
+          <div class="info-value">15:00 – 16:30</div>
+        </div>
+        <div class="info-box warm">
+          <div class="info-icon">📅</div>
+          <div class="info-label">Ngày tổ chức</div>
+          <div id="viewDate" class="info-value">Thứ Năm, 26/11</div>
+        </div>
+        <div class="info-box mint">
+          <div class="info-icon">📍</div>
+          <div class="info-label">Địa điểm</div>
+          <div id="viewLocation" class="info-value">Văn phòng Gon tech</div>
+        </div>
+      </section>
+
+      <!-- Compact Wishes Section -->
+      <section class="wish-section" aria-label="Gửi lời chúc sinh nhật">
+        <div class="wish-header">
+          <h2 class="wish-title">💌 Gửi Lời Chúc Sinh Nhật</h2>
+          <span id="wishCount" class="wish-badge">2 lời chúc</span>
+        </div>
+
+        <form id="wishForm" class="wish-form">
+          <input id="wishName" type="text" placeholder="Tên của bạn..." required maxlength="40" />
+          <input id="wishText" type="text" placeholder="Viết lời chúc sinh nhật tháng 11..." required maxlength="160" />
+          <button class="btn-primary" type="submit">Gửi 🎉</button>
+        </form>
+
+        <div class="quick-wishes">
+          <button type="button" class="chip" data-wish="Chúc mừng sinh nhật tháng 11! Tuổi mới thật nhiều niềm vui và rực rỡ nhé! 🎂">🎂 Tuổi mới rực rỡ</button>
+          <button type="button" class="chip" data-wish="Happy Birthday! Chúc team tháng 11 code mượt không bug, luôn vui khỏe! 🚀">🚀 Code mượt không bug</button>
+          <button type="button" class="chip" data-wish="Hẹn gặp mọi người lúc 15:00 thổi nến ăn bánh nha! 🥂">🥂 Hẹn gặp 15:00</button>
+        </div>
+
+        <div id="wishList" class="wish-list">
+          <div class="wish-card">
+            <button type="button" class="wish-del" title="Xoá lời chúc" aria-label="Xoá lời chúc">×</button>
+            <div class="wish-author">Team Gon tech</div>
+            <div class="wish-body">Chúc các thành viên sinh nhật tháng 11 tuổi mới thật nhiều sức khỏe, niềm vui và thành công! 🎂✨</div>
+          </div>
+          <div class="wish-card">
+            <button type="button" class="wish-del" title="Xoá lời chúc" aria-label="Xoá lời chúc">×</button>
+            <div class="wish-author">HR · Gon tech</div>
+            <div class="wish-body">Bánh kem và quà xinh đã sẵn sàng, hẹn cả nhà đúng 15:00 nhé! 🎉💙</div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="card-footer">
+        Hẹn gặp cả nhà đông đủ · <strong>Gon tech Family</strong> 💙
+      </footer>
+    </article>
+  </main>
+
+  <!-- Floating Birthday Music Player -->
+  <aside id="musicBar" class="music-bar" aria-label="Trình phát nhạc sinh nhật">
+    <div class="music-left">
+      <button id="playPauseBtn" class="btn-play" type="button" title="Phát / Tạm dừng nhạc sinh nhật" aria-label="Phát hoặc tạm dừng nhạc">▶</button>
+      <div id="eqBars" class="eq-bars" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="music-meta">
+        <div id="musicTitle" class="music-title">Happy Birthday to You</div>
+        <div id="musicStatus" class="music-status">Nhấn ▶ để phát nhạc sinh nhật</div>
+      </div>
+    </div>
+    <div class="music-controls">
+      <button id="modePianoBtn" class="mode-btn active" type="button">🎹 Piano</button>
+      <button id="modeBoxBtn" class="mode-btn" type="button">✨ Hộp nhạc</button>
+      <input id="volSlider" class="vol-slider" type="range" min="0" max="1" step="0.05" value="0.7" title="Âm lượng" aria-label="Âm lượng" />
+    </div>
+  </aside>
+
+  <audio id="customAudioEl" loop></audio>
+
+  <script>
+    (function () {
+      const NOTE = {
+        Bb2: 116.54, C3: 130.81, D3: 146.83, E3: 164.81, F3: 174.61, G3: 196.00, A3: 220.00, Bb3: 233.08,
+        C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, Bb4: 466.16,
+        C5: 523.25, F5: 698.46
+      };
+
+      const MELODY = [
+        { n: NOTE.C4, d: 0.72, ch: [NOTE.C3, NOTE.F3, NOTE.A3] },
+        { n: NOTE.C4, d: 0.28 },
+        { n: NOTE.D4, d: 1.0,  ch: [NOTE.F3, NOTE.A3, NOTE.C4] },
+        { n: NOTE.C4, d: 1.0 },
+        { n: NOTE.F4, d: 1.0,  ch: [NOTE.F3, NOTE.A3, NOTE.C4] },
+        { n: NOTE.E4, d: 2.0,  ch: [NOTE.C3, NOTE.G3, NOTE.Bb3] },
+
+        { n: NOTE.C4, d: 0.72 },
+        { n: NOTE.C4, d: 0.28 },
+        { n: NOTE.D4, d: 1.0,  ch: [NOTE.C3, NOTE.G3, NOTE.Bb3] },
+        { n: NOTE.C4, d: 1.0 },
+        { n: NOTE.G4, d: 1.0,  ch: [NOTE.C3, NOTE.E3, NOTE.Bb3] },
+        { n: NOTE.F4, d: 2.0,  ch: [NOTE.F3, NOTE.A3, NOTE.C4] },
+
+        { n: NOTE.C4, d: 0.72 },
+        { n: NOTE.C4, d: 0.28 },
+        { n: NOTE.C5, d: 1.0,  ch: [NOTE.F3, NOTE.A3, NOTE.C4] },
+        { n: NOTE.A4, d: 1.0 },
+        { n: NOTE.F4, d: 1.0,  ch: [NOTE.Bb2, NOTE.F3, NOTE.Bb3] },
+        { n: NOTE.E4, d: 1.0 },
+        { n: NOTE.D4, d: 2.0,  ch: [NOTE.Bb2, NOTE.F3, NOTE.Bb3] },
+
+        { n: NOTE.Bb4, d: 0.72 },
+        { n: NOTE.Bb4, d: 0.28 },
+        { n: NOTE.A4, d: 1.0,  ch: [NOTE.C3, NOTE.F3, NOTE.A3] },
+        { n: NOTE.F4, d: 1.0 },
+        { n: NOTE.G4, d: 1.0,  ch: [NOTE.C3, NOTE.G3, NOTE.Bb3] },
+        { n: NOTE.F4, d: 2.4,  ch: [NOTE.F3, NOTE.A3, NOTE.C4, NOTE.F4] },
+
+        { n: NOTE.A4, d: 0.35, sparkle: true },
+        { n: NOTE.C5, d: 0.35, sparkle: true },
+        { n: NOTE.F5, d: 0.9,  sparkle: true },
+        { n: 0,       d: 1.0 }
+      ];
+
+      let audioCtx = null;
+      let masterGain = null;
+      let isPlaying = false;
+      let synthMode = "piano";
+      let volume = 0.7;
+      let stepIndex = 0;
+      let timerId = null;
+      let useCustomAudio = false;
+
+      const playPauseBtn = document.getElementById("playPauseBtn");
+      const eqBars = document.getElementById("eqBars");
+      const musicTitle = document.getElementById("musicTitle");
+      const musicStatus = document.getElementById("musicStatus");
+      const modePianoBtn = document.getElementById("modePianoBtn");
+      const modeBoxBtn = document.getElementById("modeBoxBtn");
+      const volSlider = document.getElementById("volSlider");
+      const customAudioEl = document.getElementById("customAudioEl");
+
+      function ensureAudio() {
+        if (!audioCtx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          audioCtx = new AC();
+          masterGain = audioCtx.createGain();
+          masterGain.gain.value = volume * 0.55;
+          masterGain.connect(audioCtx.destination);
+        }
+        if (audioCtx.state === "suspended") audioCtx.resume();
+      }
+
+      function playTone(freq, startTime, duration, amp, isChord, isSparkle) {
+        if (!audioCtx || !freq) return;
+        const osc1 = audioCtx.createOscillator();
+        const osc2 = audioCtx.createOscillator();
+        const noteGain = audioCtx.createGain();
+
+        if (synthMode === "box" || isSparkle) {
+          osc1.type = "sine";
+          osc2.type = "triangle";
+          osc1.frequency.setValueAtTime(freq * (isSparkle ? 1 : 2), startTime);
+          osc2.frequency.setValueAtTime(freq * (isSparkle ? 2 : 4), startTime);
+        } else {
+          osc1.type = isChord ? "sine" : "triangle";
+          osc2.type = "sine";
+          osc1.frequency.setValueAtTime(freq, startTime);
+          osc2.frequency.setValueAtTime(freq * 2, startTime);
+        }
+
+        const subGain = audioCtx.createGain();
+        subGain.gain.value = synthMode === "box" ? 0.14 : (isChord ? 0.12 : 0.24);
+
+        const release = synthMode === "box" ? Math.max(duration * 1.5, 0.75) : Math.max(duration * 1.15, 0.55);
+        noteGain.gain.setValueAtTime(0.0001, startTime);
+        noteGain.gain.linearRampToValueAtTime(amp, startTime + 0.018);
+        noteGain.gain.exponentialRampToValueAtTime(Math.max(amp * 0.28, 0.001), startTime + duration * 0.65);
+        noteGain.gain.exponentialRampToValueAtTime(0.0001, startTime + release);
+
+        osc1.connect(noteGain);
+        osc2.connect(subGain);
+        subGain.connect(noteGain);
+        noteGain.connect(masterGain);
+
+        osc1.start(startTime);
+        osc2.start(startTime);
+        osc1.stop(startTime + release + 0.05);
+        osc2.stop(startTime + release + 0.05);
+      }
+
+      function scheduleNextNote() {
+        if (!isPlaying || useCustomAudio) return;
+        const beatSec = 60 / 108;
+        const item = MELODY[stepIndex];
+        const now = audioCtx.currentTime + 0.02;
+        const durSec = item.d * beatSec;
+
+        if (item.n > 0) {
+          playTone(item.n, now, durSec, item.sparkle ? 0.16 : 0.34, false, !!item.sparkle);
+        }
+        if (item.ch && item.ch.length) {
+          item.ch.forEach((f, idx) => {
+            playTone(f, now + idx * 0.022, durSec * 1.4, 0.11, true, false);
+          });
+        }
+
+        stepIndex = (stepIndex + 1) % MELODY.length;
+        timerId = setTimeout(scheduleNextNote, durSec * 1000);
+      }
+
+      function playChimeCelebration() {
+        ensureAudio();
+        const now = audioCtx.currentTime + 0.01;
+        [NOTE.F4, NOTE.A4, NOTE.C5, NOTE.F5].forEach((f, i) => {
+          playTone(f, now + i * 0.07, 0.55, 0.22, false, true);
+        });
+      }
+
+      function updatePlayerUI() {
+        playPauseBtn.textContent = isPlaying ? "❚❚" : "▶";
+        eqBars.classList.toggle("playing", isPlaying);
+        if (useCustomAudio) {
+          musicStatus.textContent = isPlaying ? "Đang phát nhạc tải lên" : "Đã tạm dừng";
+        } else {
+          const label = synthMode === "piano" ? "Piano Tiệc Vui" : "Hộp Nhạc Êm Dịu";
+          musicStatus.textContent = isPlaying ? "Đang phát · " + label : "Đã tạm dừng · Nhấn ▶ để phát";
+        }
+      }
+
+      function startMusic() {
+        if (useCustomAudio) {
+          customAudioEl.volume = volume;
+          customAudioEl.play().catch(() => {});
+          isPlaying = true;
+          updatePlayerUI();
+          return;
+        }
+        ensureAudio();
+        if (isPlaying) return;
+        isPlaying = true;
+        updatePlayerUI();
+        scheduleNextNote();
+      }
+
+      function pauseMusic() {
+        isPlaying = false;
+        if (timerId) { clearTimeout(timerId); timerId = null; }
+        if (useCustomAudio) customAudioEl.pause();
+        updatePlayerUI();
+      }
+
+      playPauseBtn.addEventListener("click", () => {
+        if (isPlaying) pauseMusic();
+        else startMusic();
+      });
+
+      modePianoBtn.addEventListener("click", () => {
+        useCustomAudio = false;
+        customAudioEl.pause();
+        synthMode = "piano";
+        musicTitle.textContent = "Happy Birthday to You";
+        modePianoBtn.classList.add("active");
+        modeBoxBtn.classList.remove("active");
+        if (!isPlaying) startMusic();
+        else updatePlayerUI();
+        showToast("🎹 Chế độ Piano Tiệc Vui");
+      });
+
+      modeBoxBtn.addEventListener("click", () => {
+        useCustomAudio = false;
+        customAudioEl.pause();
+        synthMode = "box";
+        musicTitle.textContent = "Happy Birthday (Music Box)";
+        modeBoxBtn.classList.add("active");
+        modePianoBtn.classList.remove("active");
+        if (!isPlaying) startMusic();
+        else updatePlayerUI();
+        showToast("✨ Chế độ Hộp Nhạc");
+      });
+
+      volSlider.addEventListener("input", (e) => {
+        volume = parseFloat(e.target.value);
+        if (masterGain && audioCtx) {
+          masterGain.gain.setTargetAtTime(volume * 0.55, audioCtx.currentTime, 0.03);
+        }
+        customAudioEl.volume = volume;
+      });
+
+      // Bright Floating Bubbles & Vibrant Confetti
+      const bgCanvas = document.getElementById("bgCanvas");
+      const bgCtx = bgCanvas.getContext("2d");
+      const cfCanvas = document.getElementById("confettiCanvas");
+      const cfCtx = cfCanvas.getContext("2d");
+
+      let W = window.innerWidth;
+      let H = window.innerHeight;
+      function resizeCanvases() {
+        W = window.innerWidth;
+        H = window.innerHeight;
+        bgCanvas.width = W; bgCanvas.height = H;
+        cfCanvas.width = W; cfCanvas.height = H;
+      }
+      resizeCanvases();
+      window.addEventListener("resize", resizeCanvases);
+
+      const BUBBLE_COLORS = ["0, 87, 217", "14, 165, 233", "0, 201, 190", "0, 229, 212"];
+      const bubbles = Array.from({ length: 34 }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 5 + 2.2,
+        vy: -(Math.random() * 0.35 + 0.12),
+        a: Math.random() * 0.2 + 0.08,
+        c: BUBBLE_COLORS[Math.floor(Math.random() * BUBBLE_COLORS.length)]
+      }));
+
+      let confetti = [];
+      const CF_COLORS = ["#003FA8", "#0074E8", "#0EA5E9", "#00D4C6", "#5CE1E6", "#FBBF24"];
+
+      function launchConfetti(count = 95, originY = 0.35) {
+        for (let i = 0; i < count; i++) {
+          const angle = -Math.PI / 2 + (Math.random() - 0.5) * 1.9;
+          const speed = Math.random() * 9 + 4.5;
+          confetti.push({
+            x: W * (0.25 + Math.random() * 0.5),
+            y: H * originY,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - Math.random() * 3,
+            w: Math.random() * 8 + 5,
+            h: Math.random() * 4 + 3,
+            rot: Math.random() * Math.PI * 2,
+            vr: (Math.random() - 0.5) * 0.22,
+            color: CF_COLORS[Math.floor(Math.random() * CF_COLORS.length)],
+            life: 1
+          });
+        }
+      }
+
+      function animateVisuals() {
+        bgCtx.clearRect(0, 0, W, H);
+        for (const s of bubbles) {
+          s.y += s.vy;
+          if (s.y < -12) { s.y = H + 12; s.x = Math.random() * W; }
+          bgCtx.beginPath();
+          bgCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          bgCtx.fillStyle = "rgba(" + s.c + "," + s.a + ")";
+          bgCtx.fill();
+        }
+
+        if (confetti.length) {
+          cfCtx.clearRect(0, 0, W, H);
+          for (let i = confetti.length - 1; i >= 0; i--) {
+            const p = confetti[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.19;
+            p.vx *= 0.99;
+            p.rot += p.vr;
+            p.life -= 0.0085;
+            if (p.life <= 0 || p.y > H + 30) {
+              confetti.splice(i, 1);
+              continue;
+            }
+            cfCtx.save();
+            cfCtx.translate(p.x, p.y);
+            cfCtx.rotate(p.rot);
+            cfCtx.globalAlpha = Math.min(p.life * 1.4, 1);
+            cfCtx.fillStyle = p.color;
+            cfCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+            cfCtx.restore();
+          }
+        } else {
+          cfCtx.clearRect(0, 0, W, H);
+        }
+        requestAnimationFrame(animateVisuals);
+      }
+      animateVisuals();
+
+      // Interactive Cover, Cake, Wishes & Customizer
+      const coverScreen = document.getElementById("coverScreen");
+      const pageWrap = document.getElementById("pageWrap");
+      const openInviteBtn = document.getElementById("openInviteBtn");
+      const confettiBtn = document.getElementById("confettiBtn");
+      const cakeZone = document.getElementById("cakeZone");
+      const cakeCaption = document.getElementById("cakeCaption");
+      const toastEl = document.getElementById("toast");
+
+      let toastTimer = null;
+      function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2400);
+      }
+
+      openInviteBtn.addEventListener("click", () => {
+        coverScreen.classList.add("hidden");
+        pageWrap.classList.add("visible");
+        startMusic();
+        launchConfetti(110, 0.42);
+      });
+
+      confettiBtn.addEventListener("click", () => {
+        launchConfetti(95, 0.35);
+        playChimeCelebration();
+      });
+
+      function toggleCake() {
+        const blown = cakeZone.classList.toggle("blown");
+        if (blown) {
+          cakeCaption.textContent = "🎉 Chúc mừng sinh nhật Tháng 11! (Nhấn thắp lại nến)";
+          launchConfetti(80, 0.4);
+          playChimeCelebration();
+          showToast("🕯️ Happy Birthday tháng 11 Gon tech!");
+        } else {
+          cakeCaption.textContent = "Nhấn để thổi nến ước nguyện ✨";
+        }
+      }
+      cakeZone.addEventListener("click", toggleCake);
+      cakeZone.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleCake(); }
+      });
+
+      // Wishes Wall
+      const wishForm = document.getElementById("wishForm");
+      const wishName = document.getElementById("wishName");
+      const wishText = document.getElementById("wishText");
+      const wishList = document.getElementById("wishList");
+      const wishCount = document.getElementById("wishCount");
+
+      function updateWishCount() {
+        const count = wishList.querySelectorAll(".wish-card").length;
+        wishCount.textContent = count + " lời chúc";
+      }
+
+      document.querySelectorAll(".chip").forEach((chip) => {
+        chip.addEventListener("click", () => {
+          wishText.value = chip.getAttribute("data-wish") || "";
+          wishName.focus();
+        });
+      });
+
+      wishList.addEventListener("click", (e) => {
+        const delBtn = e.target.closest(".wish-del");
+        if (!delBtn) return;
+        const card = delBtn.closest(".wish-card");
+        if (card) {
+          card.remove();
+          updateWishCount();
+          showToast("🗑️ Đã xoá lời chúc");
+        }
+      });
+
+      wishForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const author = wishName.value.trim();
+        const body = wishText.value.trim();
+        if (!author || !body) return;
+
+        const card = document.createElement("div");
+        card.className = "wish-card";
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.className = "wish-del";
+        delBtn.title = "Xoá lời chúc";
+        delBtn.setAttribute("aria-label", "Xoá lời chúc");
+        delBtn.textContent = "×";
+        const aEl = document.createElement("div");
+        aEl.className = "wish-author";
+        aEl.textContent = author;
+        const bEl = document.createElement("div");
+        bEl.className = "wish-body";
+        bEl.textContent = body;
+        card.appendChild(delBtn);
+        card.appendChild(aEl);
+        card.appendChild(bEl);
+
+        wishList.prepend(card);
+        wishName.value = "";
+        wishText.value = "";
+        updateWishCount();
+        launchConfetti(60, 0.65);
+        playChimeCelebration();
+        showToast("💌 Đã gửi lời chúc sinh nhật!");
+      });
+
+      const editPanel = document.getElementById("editPanel");
+      const toggleEditBtn = document.getElementById("toggleEditBtn");
+      const closeEditBtn = document.getElementById("closeEditBtn");
+      const inpDate = document.getElementById("inpDate");
+      const inpLocation = document.getElementById("inpLocation");
+      const inpHonorees = document.getElementById("inpHonorees");
+      const inpMessage = document.getElementById("inpMessage");
+      const inpCustomAudio = document.getElementById("inpCustomAudio");
+      const downloadHtmlBtn = document.getElementById("downloadHtmlBtn");
+
+      const viewDate = document.getElementById("viewDate");
+      const viewLocation = document.getElementById("viewLocation");
+      const viewHonorees = document.getElementById("viewHonorees");
+      const viewMessage = document.getElementById("viewMessage");
+
+      toggleEditBtn.addEventListener("click", () => editPanel.classList.toggle("open"));
+      closeEditBtn.addEventListener("click", () => editPanel.classList.remove("open"));
+
+      inpDate.addEventListener("input", () => { viewDate.textContent = inpDate.value || "Thứ Năm, 26/11"; });
+      inpLocation.addEventListener("input", () => { viewLocation.textContent = inpLocation.value || "Văn phòng Gon tech"; });
+      inpHonorees.addEventListener("input", () => { viewHonorees.textContent = inpHonorees.value || "Chúc mừng các thành viên sinh nhật Tháng 11"; });
+      inpMessage.addEventListener("input", () => { viewMessage.textContent = inpMessage.value; });
+
+      inpCustomAudio.addEventListener("change", (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const url = URL.createObjectURL(file);
+        pauseMusic();
+        customAudioEl.src = url;
+        useCustomAudio = true;
+        musicTitle.textContent = file.name.replace(/\.[^.]+$/, "");
+        modePianoBtn.classList.remove("active");
+        modeBoxBtn.classList.remove("active");
+        startMusic();
+        showToast("🎵 Đã nạp nhạc riêng: " + file.name);
+      });
+
+      downloadHtmlBtn.addEventListener("click", () => {
+        const clone = document.documentElement.cloneNode(true);
+        const cCover = clone.querySelector("#coverScreen");
+        const cPage = clone.querySelector("#pageWrap");
+        const cEdit = clone.querySelector("#editPanel");
+        const cToast = clone.querySelector("#toast");
+        const cCake = clone.querySelector("#cakeZone");
+        const cEq = clone.querySelector("#eqBars");
+        const cPlay = clone.querySelector("#playPauseBtn");
+
+        if (cCover) cCover.classList.remove("hidden");
+        if (cPage) cPage.classList.remove("visible");
+        if (cEdit) cEdit.classList.remove("open");
+        if (cToast) { cToast.classList.remove("show"); cToast.textContent = ""; }
+        if (cCake) cCake.classList.remove("blown");
+        if (cEq) cEq.classList.remove("playing");
+        if (cPlay) cPlay.textContent = "▶";
+
+        const syncAttr = (sel, val) => {
+          const el = clone.querySelector(sel);
+          if (el) el.setAttribute("value", val);
+        };
+        syncAttr("#inpDate", inpDate.value);
+        syncAttr("#inpLocation", inpLocation.value);
+        syncAttr("#inpHonorees", inpHonorees.value);
+        const cMsg = clone.querySelector("#inpMessage");
+        if (cMsg) cMsg.textContent = inpMessage.value;
+
+        const htmlContent = "<!DOCTYPE html>\n" + clone.outerHTML;
+        const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "index.html";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        showToast("💾 Đã tải xuống file index.html sẵn sàng up web!");
+      });
+    })();
+  </script>
+</body>
+</html>
